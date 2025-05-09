@@ -1,30 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import mainAxios from "axios";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const axios = mainAxios.create({
+    baseURL: import.meta.env.VITE_API_URL,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
+  });
 
   return (
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
+    <>
+      <h1>SkyWander</h1>
+
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        <select
+          onChange={({ target }) =>
+            target.value && axios.post("/apontar", { name: target.value })
+          }
+        >
+          <option value="">Selecione</option>
+
+          <option value="Mars">Marte</option>
+        </select>
+
+        <button onClick={() => axios.post("/desligar")}>Desligar</button>
       </div>
-  )
+    </>
+  );
 }
 
-export default App
+export default App;
